@@ -1246,6 +1246,53 @@ namespace core
         return privacy_access_right::not_set;
     }
 
+    enum class notification_counter_mode
+    {
+        not_muted_messages = 0,
+        not_muted_chats = 1,
+        all_messages = 2,
+        all_chats = 3,
+    };
+
+    inline std::string notification_mode_to_string(const notification_counter_mode _value)
+    {
+        switch (_value)
+        {
+            case notification_counter_mode::all_messages:
+                return "all_messages";
+
+            case notification_counter_mode::all_chats:
+                return "all_chats";
+
+            case notification_counter_mode::not_muted_messages:
+                return "not_muted_messages";
+
+            case notification_counter_mode::not_muted_chats:
+                return "not_muted_chats";
+
+            default:
+                break;
+        }
+
+        assert(!"unknown value");
+        return std::string();
+    }
+
+    inline notification_counter_mode notification_mode_from_string(const std::string_view _string) noexcept
+    {
+        if (_string == "all_messages")
+            return notification_counter_mode::all_messages;
+        else if (_string == "all_chats")
+            return notification_counter_mode::all_chats;
+        else if (_string == "not_muted_messages")
+            return notification_counter_mode::not_muted_messages;
+        else if (_string == "not_muted_chats")
+            return notification_counter_mode::not_muted_chats;
+
+        assert(!"unknown value");
+        return notification_counter_mode::all_messages;
+    }
+
     enum class nickname_errors
     {
         success = 0,

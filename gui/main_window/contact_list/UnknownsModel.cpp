@@ -1,3 +1,4 @@
+#include <gui_settings.h>
 #include "stdafx.h"
 #include "UnknownsModel.h"
 #include "ContactListModel.h"
@@ -428,11 +429,32 @@ namespace Logic
 
     int UnknownsModel::totalUnreads() const
     {
+        auto notification_mode = core::notification_mode_from_string(
+                Ui::get_gui_settings()->get_value<QString>(
+                        settings_show_in_unreads_counter, QString::fromUtf8("all_messages")
+                ).toStdString()
+        );
+
         int result = 0;
         for (const auto& iter : dialogs_)
         {
-            if (!Logic::getContactListModel()->isMuted(iter.AimId_))
-                result += iter.UnreadCount_;
+            switch (notification_mode) {
+                case core::notification_counter_mode::all_messages:
+                    result += iter.UnreadCount_;
+                    break;
+                case core::notification_counter_mode::all_chats:
+                    if (iter.UnreadCount_)
+                        result++;
+                    break;
+                case core::notification_counter_mode::not_muted_messages:
+                    if (!Logic::getContactListModel()->isMuted(iter.AimId_))
+                        result += iter.UnreadCount_;
+                    break;
+                case core::notification_counter_mode::not_muted_chats:
+                    if (iter.UnreadCount_ &&!Logic::getContactListModel()->isMuted(iter.AimId_))
+                        result++;
+                    break;
+            }
         }
         return result;
     }

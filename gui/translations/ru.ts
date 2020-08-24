@@ -33,13 +33,6 @@
     </message>
 </context>
 <context>
-    <name>QObject</name>
-    <message>
-        <source>Unable to start the server: %1.</source>
-        <translation>Ошибка запуска сервера: %1.</translation>
-    </message>
-</context>
-<context>
     <name>QWidgetTextControl</name>
     <message>
         <source>&amp;Undo</source>
@@ -5303,6 +5296,26 @@ You can leave your feedback or report an error here:</source>
     <message>
         <source>Show unreads counter in window title</source>
         <translation>Показывать количество непрочитанных в заголовке окна</translation>
+    </message>
+    <message>
+        <source>Show in unreads counter</source>
+        <translation>Показывать в счётчике непрочитанных</translation>
+    </message>
+    <message>
+        <source>Number of unread messages in chats with enabled notifications</source>
+        <translation>Количество непрочитанных сообщений в чатах с включенными уведомлениями</translation>
+    </message>
+    <message>
+        <source>Number of unread chats with enabled notifications</source>
+        <translation>Количество непрочитанных чатов с включенными уведомлениями</translation>
+    </message>
+    <message>
+        <source>Number of all unread messages</source>
+        <translation>Количество всех непрочитанных сообщений</translation>
+    </message>
+    <message>
+        <source>Number of all unread chats</source>
+        <translation>Количество всех непрочитанных чатов</translation>
     </message>
 </context>
 <context>

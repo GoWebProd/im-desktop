@@ -91,6 +91,7 @@ constexpr bool settings_allow_statuses_default() noexcept { return true; }
 #define settings_hide_message_notification "hide_message_notification"
 #define settings_alert_tray_icon "alert_tray_icon"
 #define settings_show_unreads_in_title "show_unreads_in_title"
+#define settings_show_in_unreads_counter "show_in_unreads_counter"
 
 #define settings_keep_logged_in "keep_logged_in"
 

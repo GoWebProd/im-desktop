@@ -1,3 +1,5 @@
+#include <controls/SimpleListWidget.h>
+#include <controls/RadioTextRow.h>
 #include "stdafx.h"
 #include "GeneralSettingsWidget.h"
 
@@ -140,6 +142,26 @@ void GeneralSettingsWidget::Creator::initNotifications(NotificationSettings* _pa
                 if (get_gui_settings()->get_value<bool>(settings_show_unreads_in_title, false) != enabled)
                     get_gui_settings()->set_value<bool>(settings_show_unreads_in_title, enabled);
             }, -1, qsl("AS NotificationsPage showUnreadsCountItTitleSettings"));
+
+        static auto default_counter_mode = qsl("all_messages");
+        GeneralCreator::addRadioBoxGroup(
+                scrollArea,
+                mainLayout,
+                QT_TRANSLATE_NOOP("settings", "Show in unreads counter"),
+                std::vector<QString>{
+                        QT_TRANSLATE_NOOP("settings", "Number of unread messages in chats with enabled notifications"),
+                        QT_TRANSLATE_NOOP("settings", "Number of unread chats with enabled notifications"),
+                        QT_TRANSLATE_NOOP("settings", "Number of all unread messages"),
+                        QT_TRANSLATE_NOOP("settings", "Number of all unread chats"),
+                    },
+                int(core::notification_mode_from_string(get_gui_settings()->get_value<QString>(settings_show_in_unreads_counter, default_counter_mode).toStdString())),
+                [](int _idx)
+                {
+                    auto new_value = QString::fromStdString(core::notification_mode_to_string(core::notification_counter_mode(_idx)));
+
+                    if (get_gui_settings()->get_value<QString>(settings_show_in_unreads_counter, default_counter_mode) != new_value)
+                        get_gui_settings()->set_value<QString>(settings_show_in_unreads_counter, new_value);
+                });
     }
 }
 

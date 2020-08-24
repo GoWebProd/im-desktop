@@ -9,6 +9,8 @@
 #include "../utils/utils.h"
 #include "../styles/ThemeParameters.h"
 #include "main_window/sidebar/SidebarUtils.h"
+#include "SimpleListWidget.h"
+#include "RadioTextRow.h"
 
 static QString spaceString()
 {
@@ -440,6 +442,47 @@ namespace Ui
 
         _layout->addWidget(cmbBox);
         return cmbBox;
+    }
+
+    void GeneralCreator::addRadioBoxGroup(QWidget * _parent, QLayout * _layout, const QString & _info, const std::vector<QString>& _values, int _selected, std::function<void(int)> _slot)
+    {
+        if (!_info.isEmpty())
+        {
+            auto headerWidget = new QWidget(_parent);
+            auto headerLayout = Utils::emptyVLayout(headerWidget);
+            Utils::grabTouchWidget(headerWidget);
+            headerLayout->setAlignment(Qt::AlignTop);
+            headerLayout->setContentsMargins(0, 0, 0, 0);
+            headerLayout->addSpacing(Utils::scale_value(50));
+
+            addHeader(headerWidget, headerLayout, _info, 20);
+
+            _layout->addWidget(headerWidget);
+        }
+
+        auto list = new SimpleListWidget(Qt::Vertical);
+        for (const auto& name : _values)
+        {
+            auto radioTextRow = new RadioTextRow(name);
+            list->addItem(radioTextRow);
+        }
+
+        list->setCurrentIndex(_selected);
+
+        if (_slot)
+            QObject::connect(list, &SimpleListWidget::clicked, list, [slot = std::move(_slot), list](int _idx) {
+                list->setCurrentIndex(_idx);
+                slot(_idx);
+            });
+
+        auto searchWidget = new QWidget(_parent);
+        Utils::grabTouchWidget(searchWidget);
+        auto searchLayout = Utils::emptyVLayout(searchWidget);
+        searchLayout->addSpacing(Utils::scale_value(12));
+        searchLayout->setAlignment(Qt::AlignTop);
+
+        searchLayout->addWidget(list);
+        _layout->addWidget(searchWidget);
     }
 
     SettingsSlider::SettingsSlider(Qt::Orientation _orientation, QWidget* _parent)

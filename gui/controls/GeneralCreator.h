@@ -106,5 +106,14 @@ namespace Ui
             int _width,
             std::function< void(const QString&, int) > _slot
         );
+
+        static void addRadioBoxGroup(
+            QWidget* _parent,
+            QLayout* _layout,
+            const QString& _info,
+            const std::vector< QString >& _values,
+            int _selected,
+            std::function< void(int) > _slot
+        );
     };
 }

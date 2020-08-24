@@ -2580,6 +2580,10 @@ namespace Ui
         {
             updateWindowTitle();
         }
+        else if (_key == ql1s(settings_show_in_unreads_counter))
+        {
+            Logic::getRecentsModel()->updated();
+        }
     }
 
     void MainWindow::clear_global_objects()
